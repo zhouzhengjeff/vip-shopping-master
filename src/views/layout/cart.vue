@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    这是购物车组件
   </div>
+
 </template>
 
 <script>
-
 export default {
-  name: 'App'
+  name: 'CartIndex'
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
 </style>
