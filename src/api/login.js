@@ -17,3 +17,19 @@ export const login = (data) => {
     data
   })
 }
+
+export const getSmsCaptch = (data) => {
+  return axios({
+    url: '/captcha/sendSmsCaptcha',
+    method: 'post',
+    data
+  })
+}
+
+export const doLogin = (data) => {
+  return axios({
+    url: '/passport/login',
+    method: 'post',
+    data
+  })
+}

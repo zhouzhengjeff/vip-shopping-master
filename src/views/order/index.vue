@@ -1,5 +1,5 @@
 <template>
-  <div id="app"></div>
+  <div id="app">这是Order组件</div>
 
 </template>
 

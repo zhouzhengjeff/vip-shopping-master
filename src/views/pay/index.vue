@@ -1,5 +1,5 @@
 <template>
-  <div id="app"></div>
+  <div id="app">这是Pay组件</div>
 
 </template>
 
