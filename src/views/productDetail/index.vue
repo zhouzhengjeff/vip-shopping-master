@@ -11,7 +11,6 @@
         <div class="custom-indicator">{{ current + 1 }} / {{ images.length }}</div>
       </template>
     </van-swipe>
-
     <!-- 商品说明 -->
     <div class="info">
       <div class="title">
@@ -76,27 +75,71 @@
         <van-icon name="shopping-cart-o"/>
         <span>购物车</span>
       </div>
-      <div class="btn-add">加入购物车</div>
-      <div class="btn-buy">立刻购买</div>
+      <div class="btn-add" @click="addCart()">加入购物车</div>
+      <div class="btn-buy" @click="buyNow()">立刻购买</div>
     </div>
+
+    <van-action-sheet v-model="showPannel" :title="mode === 'cart' ? '加入购物车' : '立刻购买'">
+      <div class="product">
+        <div class="product-title">
+          <div class="left">
+            <img
+                :src="goods.goods_image"
+                alt="">
+          </div>
+          <div class="right">
+            <div class="price">
+              <span>¥</span>
+              <span class="nowprice">{{ goods.goods_price_min }}</span>
+            </div>
+            <div class="count">
+              <span>库存</span>
+              <span>{{ goods.stock_total }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="num-box">
+          <span>数量</span>
+          <CountBox v-model="addCount"></CountBox>
+        </div>
+        <div v-if="goods.stock_total > 0" class="showbtn">
+          <div v-if="mode === 'cart'" class="btn">加入购物车</div>
+          <div v-if="mode === 'buyNow'" class="btn now">立刻购买</div>
+        </div>
+        <div v-else class="btn-none">该商品已抢完</div>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
 <script>
 import { getGoodsDetail } from '@/api/goods'
+import CountBox from '@/components/CountBox.vue'
 
 export default {
   name: 'ProDetail',
+  components: { CountBox },
   data () {
     return {
       images: [],
       current: 0,
-      goods: {}
+      goods: {},
+      showPannel: false,
+      mode: '',
+      addCount: 1
     }
   },
   methods: {
     onChange (index) {
       this.current = index
+    },
+    addCart () {
+      this.showPannel = true
+      this.mode = 'cart'
+    },
+    buyNow () {
+      this.showPannel = true
+      this.mode = 'buy'
     }
   },
   computed: {
@@ -281,5 +324,60 @@ export default {
 
 .tips {
   padding: 10px;
+}
+
+.product {
+  .product-title {
+    display: flex;
+
+    .left {
+      img {
+        width: 90px;
+        height: 90px;
+      }
+
+      margin: 10px;
+    }
+
+    .right {
+      flex: 1;
+      padding: 10px;
+
+      .price {
+        font-size: 14px;
+        color: #fe560a;
+
+        .nowprice {
+          font-size: 24px;
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+
+  .num-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+  }
+
+  .btn, .btn-none {
+    height: 40px;
+    line-height: 40px;
+    margin: 20px;
+    border-radius: 20px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 148, 2);
+  }
+
+  .btn.now {
+    background-color: #fe5630;
+  }
+
+  .btn-none {
+    background-color: #cccccc;
+  }
 }
 </style>

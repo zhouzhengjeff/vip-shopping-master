@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import {
+  ActionSheet,
   Button,
   Grid,
   GridItem,
@@ -13,6 +14,7 @@ import {
   Toast
 } from 'vant'
 
+Vue.use(ActionSheet)
 Vue.use(Button)
 Vue.use(Icon)
 Vue.use(Tabbar)
